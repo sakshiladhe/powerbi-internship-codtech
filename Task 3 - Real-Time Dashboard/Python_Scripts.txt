@@ -1,0 +1,103 @@
+Task 3 - Real-Time Dashboard
+
+- Python script to add one new row every 10 seconds to the live_data.csv file (Time,Region,Revenue):
+
+
+import pandas as pd
+import random
+from datetime import datetime
+import time
+
+# Set the path to your CSV file
+file_path = r"C:\Users\YourName\Documents\PowerBI\live_data.csv"  # Change YourName
+
+# Simulated regions
+regions = ['North', 'South', 'East', 'West']
+
+while True:
+    data = {
+        "Time": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+        "Region": [random.choice(regions)],
+        "Revenue": [round(random.uniform(100, 1000), 2)]
+    }
+
+    df = pd.DataFrame(data)
+    df.to_csv(file_path, mode='a', index=False, header=False)  # Append without header
+    print("New row added:", data)
+    time.sleep(10)
+
+
+
+
+Task 4 - Python Integration
+
+- Python script to show a histogram showing how revenue is spread.
+
+
+import matplotlib.pyplot as plt
+
+# Create histogram
+plt.figure(figsize=(8,5))
+plt.hist(dataset['Revenue'], bins=10, color='skyblue', edgecolor='black')
+
+# Title and labels
+plt.title('🔢 Revenue Distribution')
+plt.xlabel('Revenue')
+plt.ylabel('Frequency')
+plt.tight_layout()
+plt.show()
+
+
+- Python script to show a bar chart where each bar shows the average revenue for each product:
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create the bar plot
+plt.figure(figsize=(10,5))
+sns.barplot(x='Product', y='Revenue', data=dataset, estimator=lambda x: sum(x)/len(x), ci=None)
+
+# Title and labels
+plt.title('📊 Average Revenue by Product')
+plt.xlabel('Product')
+plt.ylabel('Average Revenue')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+- Python script to show a boxplot of revenue per region:
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd  # not strictly needed here but good to have
+import numpy as np   # only needed for some advanced calculations
+
+# dataset is the Power BI-injected DataFrame
+plt.figure(figsize=(8, 5))
+sns.boxplot(x='Region', y='Revenue', data=dataset)
+plt.title('Revenue Distribution by Region')
+plt.xlabel('Region')
+plt.ylabel('Revenue')
+plt.tight_layout()
+plt.show()
+
+
+- Python script to show a scatter plot showing if more units sold leads to higher revenue:
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Scatter plot
+plt.figure(figsize=(8,5))
+sns.scatterplot(x='Units Sold', y='Revenue', data=dataset)
+
+# Title and labels
+plt.title('🔍 Units Sold vs Revenue')
+plt.xlabel('Units Sold')
+plt.ylabel('Revenue')
+plt.tight_layout()
+plt.show()
